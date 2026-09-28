@@ -8,6 +8,8 @@
 [![Tests](https://github.com/YoungMoneyInvestments/codex-deepseek-loop/actions/workflows/tests.yml/badge.svg)](https://github.com/YoungMoneyInvestments/codex-deepseek-loop/actions/workflows/tests.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](skills/deepseek-loop/references/runtime.md)
 
+<img src="./assets/social-preview.png" alt="Codex + DeepSeek Loop" width="100%">
+
 </div>
 
 Codex plans, builds and coordinates in your own session. **DeepSeek-V4.1-Flash** (open weights, MIT, ~221 tokens/second, $0.15 / $0.60 per million tokens off-peak) adversarially reviews the plan before code exists, then independently inspects the final diff. The model that built it never grades it — and the grading seat costs about **1/40th to 1/70th of a frontier reviewer** ([benchmarks and cost math](BENCHMARKS.md)).
