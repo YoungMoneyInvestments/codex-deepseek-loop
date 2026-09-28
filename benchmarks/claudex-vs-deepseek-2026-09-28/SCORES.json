@@ -45,11 +45,11 @@
       "recall": 1.0,
       "weighted_recall": 1.0,
       "f1": 0.5416666666666666,
-      "severity_accuracy": 0.9230769230769231,
+      "severity_accuracy": 0.8974358974358975,
       "verdict_accuracy": 1.0,
       "completion_rate": 1.0,
       "clean_control_accuracy": 1.0,
-      "quality_score": 83.51648351648352,
+      "quality_score": 83.26007326007327,
       "attempts": 24,
       "failed_attempts": 0,
       "parse_retries": 1,
@@ -1148,7 +1148,7 @@
       "fn": 0,
       "target_weight": 2,
       "hit_weight": 2,
-      "severity_correct": 1,
+      "severity_correct": 0,
       "verdict_correct": true,
       "verdict": "REVISE",
       "matched": [
@@ -1156,8 +1156,8 @@
       ],
       "missed": [],
       "unmatched_findings": [
-        "F1",
-        "F2"
+        "F2",
+        "F3"
       ],
       "elapsed_seconds": 16.04,
       "usage": {

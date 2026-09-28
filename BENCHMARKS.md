@@ -4,21 +4,21 @@ This document explains the model choice behind the loop, from measured numbers â
 
 ## Direct loop reviewer benchmark
 
-We also ran a controlled first-party comparison of this repository against Young Money Investments' policy-selected adaptation of [Chase AI's `claudex-loop`](https://github.com/chaseai-yt/claudex-loop) (MIT). The suite used eight synthetic, secret-free plan and code-review cases, three repetitions, and randomized interleaving: 24 jobs per loop, 48 total. Both systems received the same task, Git base, and candidate diff. Both were scored against the same hidden answer key, which neither reviewer saw.
+We also ran a controlled first-party comparison of this repository against Young Money Investments' policy-selected adaptation of [Chase AI's `claudex-loop`](https://github.com/chaseai-yt/claudex-loop) (MIT). The suite used eight synthetic, secret-free plan and code-review cases, three repetitions, and randomized interleaving: 24 jobs per loop, 48 total. Both systems reviewed the same fixture repository, plan, Git base, and candidate state through their native delivery paths. Both were scored against the same answer key, which was not added to fixture repositories or reviewer request payloads.
 
 | Metric | Claudex loop | Codex DeepSeek loop |
 |---|---:|---:|
-| Composite quality score | 85.4 | 83.5 |
+| Composite quality score | 85.4 | 83.3 |
 | Seeded defects found | 39/39 | 39/39 |
 | Clean-control accuracy | 100.0% | 100.0% |
 | Expected-verdict accuracy | 91.7% | 100.0% |
-| Severity accuracy | 89.7% | 92.3% |
+| Severity accuracy | 89.7% | 89.7% |
 | Seeded-answer-key precision | 50.6% | 37.1% |
-| First-attempt completion | 24/24 | 24/24 |
+| Job completion (no benchmark reruns) | 24/24 | 24/24 |
 | Median latency | 16.8 seconds | 10.7 seconds |
 | Run cost | $0.9780 CLI notional | At least $0.0399 off-peak / $0.0798 peak |
 
-The preregistered quality rule treated differences below two points as a tie, so the 1.9-point spread is not a win. Automated one-to-one keyword matching credited both reviewers with all 39 seeded defects, and both approved every clean control. DeepSeek was 36% faster at the median and returned the expected verdict on every run. Claudex returned `BLOCKED` instead of expected `REVISE` on two plan runs while still finding every seeded defect in those runs. Claudex also produced fewer findings that could not be matched to the seeded answer key.
+The preregistered quality rule required a lead greater than two points. Claudex cleared it by 2.13 points, driven by fewer findings that could not be matched to the seeded answer key. Automated one-to-one keyword matching credited both reviewers with all 39 seeded defects, and both approved every clean control. DeepSeek's median latency was 36% lower (10.7 seconds versus 16.8 seconds) and it returned the expected verdict on every run. Claudex returned `BLOCKED` instead of expected `REVISE` on two plan runs while still finding every seeded defect in those runs.
 
 These are not audited false-positive rates. An unmatched finding may be a valid extra defect, an overlapping restatement, or noise. The raw structured findings are published for inspection. Independent review found that the original scorer could credit one finding to more than one defect; the published scores were recomputed after enforcing one-to-one matching. Claude's dollar figure is an API-equivalent CLI value from a Max subscription, not a billed invoice. One DeepSeek job used a JSON parse retry, and the tested runner kept only the final response's usage, so its 21,576 input and 64,262 output tokens and dollar amounts are lower bounds. The runner is fixed in this change to accumulate future retry usage.
 

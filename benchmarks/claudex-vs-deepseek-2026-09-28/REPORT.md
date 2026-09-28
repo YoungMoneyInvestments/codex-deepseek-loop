@@ -1,16 +1,16 @@
 # Loop benchmark report
 
-Quality is a tie within the preregistered 2-point threshold.
+Claudex-loop leads on preregistered quality score.
 
 ## Aggregate
 
 | Metric | Claudex-loop | Codex-DeepSeek-loop |
 |---|---:|---:|
-| Quality score | 85.4 | 83.5 |
+| Quality score | 85.4 | 83.3 |
 | Weighted defect recall | 100.0% | 100.0% |
 | Seeded-answer-key precision | 50.6% | 37.1% |
 | Verdict accuracy | 91.7% | 100.0% |
-| Severity accuracy | 89.7% | 92.3% |
+| Severity accuracy | 89.7% | 89.7% |
 | Clean-control accuracy | 100.0% | 100.0% |
 | Operational completion | 24/24 | 24/24 |
 | Attempts (failed) | 24 (0) | 24 (0) |

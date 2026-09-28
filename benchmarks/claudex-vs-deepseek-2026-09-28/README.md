@@ -61,8 +61,8 @@ one system when the other cannot run.
 - Claudex uses its native read-only repository access. DeepSeek receives the
   plan, tracked diff, new-file contents, and every declared context file. This
   tests each skill as shipped; it does not claim identical transport.
-- Ground truth remains outside generated fixture repositories, so reviewers do
-  not receive answer keys.
+- The runner does not add answer keys to generated fixture repositories or
+  reviewer request payloads. It does not sandbox native reviewer file reads.
 - The scorer assigns each finding to at most one seeded contract defect using
   deterministic keyword rules. This prevents one broad finding from earning
   credit for several defects. These automated matches are not manual

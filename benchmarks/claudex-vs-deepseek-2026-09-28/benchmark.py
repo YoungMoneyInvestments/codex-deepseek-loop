@@ -356,37 +356,22 @@ def assign_matches(targets, findings):
     order = sorted(range(len(targets)), key=lambda index: (len(candidates[index]), index))
     best_pairs: list[tuple[int, int]] = []
     best_count = -1
-    best_severity = -1
 
     def visit(position, used, chosen):
-        nonlocal best_count, best_severity
+        nonlocal best_count
         if position == len(order):
             pairs = tuple(sorted(chosen))
-            severity = sum(
-                targets[target_index]["severity"]
-                == str(findings[finding_index].get("severity", "")).lower()
-                for target_index, finding_index in pairs
-            )
-            if (len(pairs), severity) > (best_count, best_severity):
+            if len(pairs) > best_count:
                 best_pairs.clear()
                 best_pairs.extend(pairs)
                 best_count = len(pairs)
-                best_severity = severity
             return
         target_index = order[position]
-        visit(position + 1, used, chosen)
-        ranked = sorted(
-            candidates[target_index],
-            key=lambda finding_index: (
-                targets[target_index]["severity"]
-                != str(findings[finding_index].get("severity", "")).lower(),
-                finding_index,
-            ),
-        )
-        for finding_index in ranked:
+        for finding_index in sorted(candidates[target_index]):
             if finding_index not in used:
                 visit(position + 1, used | {finding_index},
                       chosen + [(target_index, finding_index)])
+        visit(position + 1, used, chosen)
 
     visit(0, set(), [])
     return [(targets[target_index], findings[finding_index])
@@ -627,9 +612,11 @@ def report(args):
             f"- `BLOCKED` verdicts: Claudex {blocked['claudex']}; DeepSeek {blocked['deepseek']}. Review each result's coverage and limitations before judging whether a block was warranted.",
             f"- Failed attempts across all recorded attempts: Claudex {a['failed_attempts']}; DeepSeek {b['failed_attempts']}. Any retry time, tokens, and estimated cost remain included.",
         ]
-        if b["parse_retries"]:
+        if b["parse_retries"] and not b["cost_complete"]:
             lines.append(
                 f"- DeepSeek JSON parse retries: {b['parse_retries']}. The live runner did not accumulate the first retry response's usage, so its token and cost totals are lower bounds.")
+        elif b["parse_retries"]:
+            lines.append(f"- DeepSeek JSON parse retries: {b['parse_retries']}; usage includes every response.")
     else:
         lines.append("- Full paired results are required before interpreting a winner.")
     lines += ["", "## Per run", "",
@@ -682,13 +669,18 @@ def self_test(_args):
         {"path": "PLAN.md", "evidence": "No test for crash atomicity or concurrent retries."},
         targets["idempotency-recorded-late"],
     )
-    broad = {"id": "broad", "path": "PLAN.md", "severity": "high",
-             "evidence": "A crash breaks atomicity before the idempotency key is stored."}
+    broad = {
+        "id": "broad", "path": "PLAN.md", "severity": "high",
+        "evidence": ("A crash between sender debit and receiver credit breaks atomicity; "
+                     "the idempotency key is stored after the balance update, so a "
+                     "concurrent retry duplicates it."),
+    }
     ledger_case = next(case for case in CASES if case["id"] == "plan-ledger-transfer")
     broad_row = score_record(
         {"job_id": "broad", "system": "claudex", "status": "completed",
          "review": {"verdict": "REVISE", "findings": [broad]}}, ledger_case)
     assert broad_row["tp"] == 1
+    assert broad_row["fn"] == 2
     claude_usage = {
         "input_tokens": 2, "cache_read_input_tokens": 100,
         "cache_creation_input_tokens": 20, "output_tokens": 10,
