@@ -1,0 +1,36 @@
+{
+  "name": "codex-deepseek-loop",
+  "description": "Four-phase plan hardening for Codex: DeepSeek-V4.1-Flash adversarially reviews the plan, then inspects the final code. Codex builds; DeepSeek grades.",
+  "author": {
+    "name": "Cameron Bennion",
+    "url": "https://github.com/YoungMoneyInvestments"
+  },
+  "homepage": "https://github.com/YoungMoneyInvestments/codex-deepseek-loop",
+  "license": "MIT",
+  "keywords": [
+    "planning",
+    "deepseek",
+    "cross-model",
+    "adversarial-review",
+    "codex"
+  ],
+  "version": "1.0.0",
+  "skills": "./skills/",
+  "repository": "https://github.com/YoungMoneyInvestments/codex-deepseek-loop",
+  "interface": {
+    "displayName": "Codex DeepSeek Loop",
+    "shortDescription": "Plan, build and review with a DeepSeek reviewer",
+    "longDescription": "Four-phase workflow: Codex plans and builds; DeepSeek-V4.1-Flash independently reviews the plan and inspects the final change set through the DeepSeek API.",
+    "developerName": "Cameron Bennion",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/YoungMoneyInvestments/codex-deepseek-loop",
+    "defaultPrompt": [
+      "Use deepseek-loop to harden this plan with an independent DeepSeek-V4.1-Flash review."
+    ]
+  }
+}
