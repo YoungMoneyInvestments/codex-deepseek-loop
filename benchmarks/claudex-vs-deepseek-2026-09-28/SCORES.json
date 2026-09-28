@@ -10,19 +10,21 @@
       "jobs": 24,
       "completed": 24,
       "tp": 39,
-      "fp": 22,
+      "fp": 38,
       "fn": 0,
-      "precision": 0.639344262295082,
+      "precision": 0.5064935064935064,
       "recall": 1.0,
       "weighted_recall": 1.0,
-      "f1": 0.78,
+      "f1": 0.6724137931034482,
       "severity_accuracy": 0.8974358974358975,
       "verdict_accuracy": 0.9166666666666666,
       "completion_rate": 1.0,
       "clean_control_accuracy": 1.0,
-      "quality_score": 88.70796553173602,
+      "quality_score": 85.38669663669664,
       "attempts": 24,
       "failed_attempts": 0,
+      "parse_retries": 0,
+      "cost_complete": true,
       "median_latency_seconds": 16.75,
       "tokens": {
         "input_tokens": 407433,
@@ -37,26 +39,28 @@
       "jobs": 24,
       "completed": 24,
       "tp": 39,
-      "fp": 30,
+      "fp": 66,
       "fn": 0,
-      "precision": 0.5652173913043478,
+      "precision": 0.37142857142857144,
       "recall": 1.0,
       "weighted_recall": 1.0,
-      "f1": 0.7222222222222222,
+      "f1": 0.5416666666666666,
       "severity_accuracy": 0.9230769230769231,
       "verdict_accuracy": 1.0,
       "completion_rate": 1.0,
       "clean_control_accuracy": 1.0,
-      "quality_score": 88.36120401337793,
+      "quality_score": 83.51648351648352,
       "attempts": 24,
       "failed_attempts": 0,
+      "parse_retries": 1,
+      "cost_complete": false,
       "median_latency_seconds": 10.7,
       "tokens": {
         "input_tokens": 21576,
         "output_tokens": 64262
       },
       "reported_cost_usd": {
-        "kind": "runner_estimate",
+        "kind": "runner_estimate_lower_bound",
         "off_peak": 0.039912,
         "peak": 0.079823
       }
@@ -69,7 +73,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 1,
+      "fp": 4,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -83,7 +87,10 @@
       ],
       "missed": [],
       "unmatched_findings": [
-        "F4"
+        "F3",
+        "F4",
+        "F6",
+        "F7"
       ],
       "elapsed_seconds": 15.01,
       "usage": {
@@ -418,7 +425,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 2,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -431,7 +438,10 @@
         "amount-not-validated"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-3",
+        "F-5"
+      ],
       "elapsed_seconds": 42.53,
       "usage": {
         "input_tokens": 4,
@@ -531,7 +541,7 @@
       "case_id": "inspect-ledger-write",
       "completed": true,
       "tp": 2,
-      "fp": 0,
+      "fp": 2,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -543,7 +553,10 @@
         "partial-ledger-write"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F3",
+        "F4"
+      ],
       "elapsed_seconds": 8.92,
       "usage": {
         "prompt_tokens": 981,
@@ -572,7 +585,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 1,
+      "fp": 3,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -584,6 +597,8 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "ZS-2",
+        "ZS-3",
         "ZS-4"
       ],
       "elapsed_seconds": 23.56,
@@ -737,7 +752,7 @@
       "case_id": "inspect-ledger-write",
       "completed": true,
       "tp": 2,
-      "fp": 0,
+      "fp": 3,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -749,7 +764,11 @@
         "partial-ledger-write"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F5"
+      ],
       "elapsed_seconds": 10.07,
       "usage": {
         "prompt_tokens": 981,
@@ -778,7 +797,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 3,
+      "fp": 4,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -791,6 +810,7 @@
       "missed": [],
       "unmatched_findings": [
         "ZS-2",
+        "ZS-3",
         "ZS-4",
         "ZS-5"
       ],
@@ -836,7 +856,7 @@
       "case_id": "plan-market-validation",
       "completed": true,
       "tp": 2,
-      "fp": 2,
+      "fp": 3,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -849,6 +869,7 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "F3",
         "F4",
         "F5"
       ],
@@ -880,7 +901,7 @@
       "case_id": "inspect-ledger-write",
       "completed": true,
       "tp": 2,
-      "fp": 1,
+      "fp": 2,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -893,7 +914,8 @@
       ],
       "missed": [],
       "unmatched_findings": [
-        "LEDGER-3"
+        "LEDGER-3",
+        "LEDGER-4"
       ],
       "elapsed_seconds": 16.61,
       "usage": {
@@ -937,7 +959,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 2,
+      "fp": 4,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -949,7 +971,9 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "F2",
         "F3",
+        "F4",
         "F5"
       ],
       "elapsed_seconds": 17.85,
@@ -1018,7 +1042,7 @@
       "case_id": "inspect-tenant-cache",
       "completed": true,
       "tp": 1,
-      "fp": 2,
+      "fp": 3,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -1030,6 +1054,7 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "F2",
         "F3",
         "F4"
       ],
@@ -1061,7 +1086,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 1,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -1074,7 +1099,9 @@
         "archive-no-rollback"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-003"
+      ],
       "elapsed_seconds": 28.47,
       "usage": {
         "input_tokens": 4,
@@ -1117,7 +1144,7 @@
       "case_id": "inspect-receipt-parser",
       "completed": true,
       "tp": 1,
-      "fp": 1,
+      "fp": 2,
       "fn": 0,
       "target_weight": 2,
       "hit_weight": 2,
@@ -1129,6 +1156,7 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "F1",
         "F2"
       ],
       "elapsed_seconds": 16.04,
@@ -1159,7 +1187,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 2,
+      "fp": 4,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -1171,6 +1199,8 @@
       ],
       "missed": [],
       "unmatched_findings": [
+        "ZIP-2",
+        "ZIP-3",
         "ZIP-4",
         "ZIP-5"
       ],
@@ -1216,7 +1246,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 2,
+      "fp": 3,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -1229,6 +1259,7 @@
       "missed": [],
       "unmatched_findings": [
         "F2",
+        "F3",
         "F4"
       ],
       "elapsed_seconds": 37.86,
@@ -1259,7 +1290,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 1,
+      "fp": 4,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -1273,7 +1304,10 @@
       ],
       "missed": [],
       "unmatched_findings": [
-        "F6"
+        "F4",
+        "F5",
+        "F6",
+        "F7"
       ],
       "elapsed_seconds": 13.01,
       "usage": {
@@ -1303,7 +1337,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 4,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -1316,7 +1350,12 @@
         "amount-not-validated"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F3",
+        "F5",
+        "F6",
+        "F7"
+      ],
       "elapsed_seconds": 48.65,
       "usage": {
         "prompt_tokens": 730,
@@ -1438,7 +1477,7 @@
       "case_id": "plan-market-validation",
       "completed": true,
       "tp": 2,
-      "fp": 2,
+      "fp": 3,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -1452,6 +1491,7 @@
       "missed": [],
       "unmatched_findings": [
         "F3",
+        "F4",
         "F5"
       ],
       "elapsed_seconds": 10.6,
@@ -1482,7 +1522,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 1,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -1495,7 +1535,9 @@
         "amount-not-validated"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-4"
+      ],
       "elapsed_seconds": 44.38,
       "usage": {
         "input_tokens": 4,
@@ -1593,7 +1635,7 @@
       "case_id": "inspect-zip-slip",
       "completed": true,
       "tp": 1,
-      "fp": 3,
+      "fp": 4,
       "fn": 0,
       "target_weight": 3,
       "hit_weight": 3,
@@ -1606,6 +1648,7 @@
       "missed": [],
       "unmatched_findings": [
         "F2",
+        "F3",
         "F4",
         "F5"
       ],
@@ -1637,7 +1680,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 2,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -1650,7 +1693,10 @@
         "archive-no-rollback"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-03",
+        "F-04"
+      ],
       "elapsed_seconds": 28.3,
       "usage": {
         "input_tokens": 4,
@@ -1693,7 +1739,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 3,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -1706,7 +1752,11 @@
         "archive-no-rollback"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F4",
+        "F5",
+        "F6"
+      ],
       "elapsed_seconds": 10.8,
       "usage": {
         "prompt_tokens": 691,
@@ -1735,7 +1785,7 @@
       "case_id": "inspect-receipt-parser",
       "completed": true,
       "tp": 1,
-      "fp": 2,
+      "fp": 3,
       "fn": 0,
       "target_weight": 2,
       "hit_weight": 2,
@@ -1748,7 +1798,8 @@
       "missed": [],
       "unmatched_findings": [
         "F2",
-        "F3"
+        "F3",
+        "F4"
       ],
       "elapsed_seconds": 20.41,
       "usage": {
@@ -1816,7 +1867,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 3,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -1829,7 +1880,11 @@
         "archive-no-rollback"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-03",
+        "F-04",
+        "F-05"
+      ],
       "elapsed_seconds": 27.82,
       "usage": {
         "input_tokens": 4,
@@ -1872,7 +1927,7 @@
       "case_id": "plan-market-validation",
       "completed": true,
       "tp": 2,
-      "fp": 4,
+      "fp": 5,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -1886,6 +1941,7 @@
       "missed": [],
       "unmatched_findings": [
         "F3",
+        "F4",
         "F5",
         "F6",
         "F7"
@@ -2147,7 +2203,7 @@
       "case_id": "inspect-receipt-parser",
       "completed": true,
       "tp": 1,
-      "fp": 1,
+      "fp": 2,
       "fn": 0,
       "target_weight": 2,
       "hit_weight": 2,
@@ -2159,7 +2215,8 @@
       ],
       "missed": [],
       "unmatched_findings": [
-        "F2"
+        "F2",
+        "F3"
       ],
       "elapsed_seconds": 18.0,
       "usage": {
@@ -2189,7 +2246,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 1,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -2202,7 +2259,9 @@
         "amount-not-validated"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F-04"
+      ],
       "elapsed_seconds": 35.73,
       "usage": {
         "input_tokens": 4,
@@ -2302,7 +2361,7 @@
       "case_id": "plan-archive-safety",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 2,
       "fn": 0,
       "target_weight": 9,
       "hit_weight": 9,
@@ -2315,7 +2374,10 @@
         "archive-no-rollback"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F4",
+        "F5"
+      ],
       "elapsed_seconds": 10.41,
       "usage": {
         "prompt_tokens": 691,
@@ -2344,7 +2406,7 @@
       "case_id": "plan-ledger-transfer",
       "completed": true,
       "tp": 3,
-      "fp": 0,
+      "fp": 3,
       "fn": 0,
       "target_weight": 8,
       "hit_weight": 8,
@@ -2357,7 +2419,11 @@
         "amount-not-validated"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F6"
+      ],
       "elapsed_seconds": 9.63,
       "usage": {
         "prompt_tokens": 730,
@@ -2386,7 +2452,7 @@
       "case_id": "inspect-ledger-write",
       "completed": true,
       "tp": 2,
-      "fp": 0,
+      "fp": 2,
       "fn": 0,
       "target_weight": 6,
       "hit_weight": 6,
@@ -2398,7 +2464,10 @@
         "partial-ledger-write"
       ],
       "missed": [],
-      "unmatched_findings": [],
+      "unmatched_findings": [
+        "F3",
+        "F4"
+      ],
       "elapsed_seconds": 9.4,
       "usage": {
         "prompt_tokens": 981,

@@ -19,7 +19,7 @@ from fixtures import CASES
 
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent.parent
-DEFAULT_WORK = PROJECT / "work" / "loop-benchmark"
+DEFAULT_WORK = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "loop-benchmark"
 DEFAULT_CLAUDEX = Path.home() / ".agents/skills/claudex-loop/scripts/runner.py"
 DEFAULT_DEEPSEEK = Path.home() / "Projects/codex-deepseek-loop/skills/deepseek-loop/scripts/deepseek_review.py"
 SEVERITY_WEIGHT = {"high": 3, "medium": 2, "low": 1}
@@ -298,6 +298,8 @@ def run_suite(args):
             cost = raw.get("total_cost_usd")
         if cost is None:
             cost = review.get("metadata", {}).get("total_cost_usd")
+        api = raw.get("api")
+        api = api if isinstance(api, dict) else {}
         record = {
             **job,
             "title": case["title"],
@@ -308,6 +310,12 @@ def run_suite(args):
             "review": review,
             "elapsed_seconds": raw.get("elapsed_seconds", round(time.time() - started, 2)),
             "usage": usage,
+            "api": api,
+            "cost_complete": not (
+                job["system"] == "deepseek"
+                and api.get("parse_retries", 0)
+                and not api.get("usage_accumulated", False)
+            ),
             "cost_usd": cost,
             "requested_model": raw.get("model_requested") or raw.get("requested_model"),
             "observed_model": raw.get("model_observed") or raw.get("observed_models") or (review or {}).get("metadata", {}).get("observed_models"),
@@ -338,19 +346,59 @@ def keyword_matches(word, text):
     return re.search(rf"(?<!\w){re.escape(word.lower())}{suffix}(?!\w)", text) is not None
 
 
+def assign_matches(targets, findings):
+    """Return a one-to-one target/finding assignment with stable best coverage."""
+    candidates = {
+        index: [item for item, finding in enumerate(findings)
+                if finding_matches(finding, target)]
+        for index, target in enumerate(targets)
+    }
+    order = sorted(range(len(targets)), key=lambda index: (len(candidates[index]), index))
+    best_pairs: list[tuple[int, int]] = []
+    best_count = -1
+    best_severity = -1
+
+    def visit(position, used, chosen):
+        nonlocal best_count, best_severity
+        if position == len(order):
+            pairs = tuple(sorted(chosen))
+            severity = sum(
+                targets[target_index]["severity"]
+                == str(findings[finding_index].get("severity", "")).lower()
+                for target_index, finding_index in pairs
+            )
+            if (len(pairs), severity) > (best_count, best_severity):
+                best_pairs.clear()
+                best_pairs.extend(pairs)
+                best_count = len(pairs)
+                best_severity = severity
+            return
+        target_index = order[position]
+        visit(position + 1, used, chosen)
+        ranked = sorted(
+            candidates[target_index],
+            key=lambda finding_index: (
+                targets[target_index]["severity"]
+                != str(findings[finding_index].get("severity", "")).lower(),
+                finding_index,
+            ),
+        )
+        for finding_index in ranked:
+            if finding_index not in used:
+                visit(position + 1, used | {finding_index},
+                      chosen + [(target_index, finding_index)])
+
+    visit(0, set(), [])
+    return [(targets[target_index], findings[finding_index])
+            for target_index, finding_index in best_pairs]
+
+
 def score_record(record, case):
     review = record.get("review") or {}
     findings = review.get("findings") if isinstance(review, dict) else []
     findings = findings if isinstance(findings, list) else []
-    matches = []
-    for target in case["expected"]:
-        candidates = [finding for finding in findings if finding_matches(finding, target)]
-        if candidates:
-            matching_severity = next((finding for finding in candidates
-                                      if str(finding.get("severity", "")).lower() == target["severity"]), None)
-            matches.append((target, matching_severity or candidates[0]))
-    relevant = {id(finding) for finding in findings
-                if any(finding_matches(finding, target) for target in case["expected"])}
+    matches = assign_matches(case["expected"], findings)
+    relevant = {id(finding) for _, finding in matches}
     expected_verdict = "REVISE" if case["expected"] else "APPROVED"
     completed = record.get("status") == "completed"
     target_weight = sum(SEVERITY_WEIGHT[item["severity"]] for item in case["expected"])
@@ -419,7 +467,8 @@ def aggregate(rows, records, history=None):
                 "precision": 0, "recall": 0, "weighted_recall": 0, "f1": 0,
                 "severity_accuracy": 0, "verdict_accuracy": 0, "completion_rate": 0,
                 "clean_control_accuracy": 0, "quality_score": 0,
-                "attempts": 0, "failed_attempts": 0,
+                "attempts": 0, "failed_attempts": 0, "parse_retries": 0,
+                "cost_complete": True,
                 "median_latency_seconds": None, "tokens": {},
                 "reported_cost_usd": None,
             }
@@ -459,11 +508,18 @@ def aggregate(rows, records, history=None):
         estimated_high = sum(float(cost.get("usd_peak", cost.get("peak", 0)))
                              for cost in costs if isinstance(cost, dict))
         reported_cost = None
+        cost_complete = all(record.get("cost_complete", True) for record in attempts)
+        parse_retries = sum(int((record.get("api") or {}).get("parse_retries", 0))
+                            for record in attempts)
         if numeric_costs:
             kind = "cli_notional" if system == "claudex" else "provider_reported"
             reported_cost = {"kind": kind, "total": sum(numeric_costs)}
         elif estimated_low or estimated_high:
-            reported_cost = {"kind": "runner_estimate", "off_peak": estimated_low, "peak": estimated_high}
+            reported_cost = {
+                "kind": "runner_estimate" if cost_complete else "runner_estimate_lower_bound",
+                "off_peak": estimated_low,
+                "peak": estimated_high,
+            }
         summary[system] = {
             "jobs": len(selected), "completed": sum(row["completed"] for row in selected),
             "tp": tp, "fp": fp, "fn": fn,
@@ -473,6 +529,8 @@ def aggregate(rows, records, history=None):
             "quality_score": 100 * (0.50 * weighted_recall + 0.25 * precision + 0.15 * verdict + 0.10 * severity),
             "attempts": len(attempts),
             "failed_attempts": sum(attempt.get("status") != "completed" for attempt in attempts),
+            "parse_retries": parse_retries,
+            "cost_complete": cost_complete,
             "median_latency_seconds": statistics.median(latency) if latency else None,
             "tokens": token_totals,
             "reported_cost_usd": reported_cost,
@@ -511,7 +569,10 @@ def fmt_cost(value):
         return f"${cost['total']:.4f} CLI notional"
     if cost["kind"] == "provider_reported":
         return f"${cost['total']:.4f} provider reported"
-    return f"${cost['off_peak']:.4f} to ${cost['peak']:.4f} estimate"
+    if cost["kind"] == "runner_estimate_lower_bound":
+        return (f"at least ${cost['off_peak']:.4f} off-peak / "
+                f"${cost['peak']:.4f} peak")
+    return f"${cost['off_peak']:.4f} off-peak / ${cost['peak']:.4f} peak estimate"
 
 
 def report(args):
@@ -538,7 +599,7 @@ def report(args):
     metrics = [
         ("Quality score", lambda x: f"{x['quality_score']:.1f}"),
         ("Weighted defect recall", lambda x: fmt_pct(x["weighted_recall"])),
-        ("Seeded-defect precision", lambda x: fmt_pct(x["precision"])),
+        ("Seeded-answer-key precision", lambda x: fmt_pct(x["precision"])),
         ("Verdict accuracy", lambda x: fmt_pct(x["verdict_accuracy"])),
         ("Severity accuracy", lambda x: fmt_pct(x["severity_accuracy"])),
         ("Clean-control accuracy", lambda x: fmt_pct(x["clean_control_accuracy"])),
@@ -564,8 +625,11 @@ def report(args):
             f"- Clean-control accuracy: Claudex {fmt_pct(a['clean_control_accuracy'])}; DeepSeek {fmt_pct(b['clean_control_accuracy'])}.",
             f"- Median effective latency: Claudex {a['median_latency_seconds']:.1f}s; DeepSeek {b['median_latency_seconds']:.1f}s.",
             f"- `BLOCKED` verdicts: Claudex {blocked['claudex']}; DeepSeek {blocked['deepseek']}. Review each result's coverage and limitations before judging whether a block was warranted.",
-            f"- First-attempt failures: Claudex {a['failed_attempts']}; DeepSeek {b['failed_attempts']}. Any retry time, tokens, and estimated cost remain included.",
+            f"- Failed attempts across all recorded attempts: Claudex {a['failed_attempts']}; DeepSeek {b['failed_attempts']}. Any retry time, tokens, and estimated cost remain included.",
         ]
+        if b["parse_retries"]:
+            lines.append(
+                f"- DeepSeek JSON parse retries: {b['parse_retries']}. The live runner did not accumulate the first retry response's usage, so its token and cost totals are lower bounds.")
     else:
         lines.append("- Full paired results are required before interpreting a winner.")
     lines += ["", "## Per run", "",
@@ -573,8 +637,8 @@ def report(args):
               "|---|---|---:|---:|---:|---|---|"]
     for row in scores["rows"]:
         lines.append(f"| {row['job_id']} | {row['system']} | {row['tp']} | {row['fp']} | {row['fn']} | {row['verdict'] or 'failed'} | {', '.join(row['missed']) or '—'} |")
-    lines += ["", "## Limits", "", "- Synthetic fixtures measure review stages, not builder creativity or full project delivery.", "- Claudex gets native read-only repository access. DeepSeek gets the plan, diff, new files, and declared context. This is native-mode effectiveness, not identical transport.", "- Unmatched findings count as false positives only against the seeded answer key. Review `SCORES.json` before publication because a reviewer may find a valid unseeded defect.", "- Model, CLI, runner hashes, tokens, and cost labels belong with any quoted result. See `RUN-CONFIG.json`; results do not generalize beyond this suite and run configuration.", ""]
-    target = args.output.resolve()
+    lines += ["", "## Limits", "", "- Synthetic fixtures measure review stages, not builder creativity or full project delivery.", "- Claudex gets native read-only repository access. DeepSeek gets the plan, diff, new files, and declared context. This is native-mode effectiveness, not identical transport.", "- Matches use automated one-to-one keyword rules. Unmatched findings are not audited false positives; inspect `RESULTS.jsonl` and `SCORES.json` before making broader claims.", "- Model, CLI, runner hashes, tokens, and cost labels belong with any quoted result. See `RUN-CONFIG.json`; results do not generalize beyond this suite and run configuration.", ""]
+    target = (args.output or root / "report.md").resolve()
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(lines), encoding="utf-8")
     print(target)
@@ -618,6 +682,13 @@ def self_test(_args):
         {"path": "PLAN.md", "evidence": "No test for crash atomicity or concurrent retries."},
         targets["idempotency-recorded-late"],
     )
+    broad = {"id": "broad", "path": "PLAN.md", "severity": "high",
+             "evidence": "A crash breaks atomicity before the idempotency key is stored."}
+    ledger_case = next(case for case in CASES if case["id"] == "plan-ledger-transfer")
+    broad_row = score_record(
+        {"job_id": "broad", "system": "claudex", "status": "completed",
+         "review": {"verdict": "REVISE", "findings": [broad]}}, ledger_case)
+    assert broad_row["tp"] == 1
     claude_usage = {
         "input_tokens": 2, "cache_read_input_tokens": 100,
         "cache_creation_input_tokens": 20, "output_tokens": 10,
@@ -656,7 +727,7 @@ def parser():
     run_parser.set_defaults(func=run_suite)
     sub.add_parser("score").set_defaults(func=score)
     report_parser = sub.add_parser("report")
-    report_parser.add_argument("--output", type=Path, default=HERE / "REPORT.md")
+    report_parser.add_argument("--output", type=Path)
     report_parser.set_defaults(func=report)
     sub.add_parser("self-test").set_defaults(func=self_test)
     return result

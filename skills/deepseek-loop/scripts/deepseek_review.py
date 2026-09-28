@@ -267,6 +267,21 @@ def estimate_cost(model: str, usage) -> "dict | None":
     }
 
 
+def merge_usage(total, current):
+    """Add token counters across every billable response in one run."""
+    if not isinstance(current, dict):
+        return total
+    merged = dict(total) if isinstance(total, dict) else {}
+    for key, value in current.items():
+        if isinstance(value, dict):
+            merged[key] = merge_usage(merged.get(key), value)
+        elif isinstance(value, (int, float)) and not isinstance(value, bool):
+            merged[key] = merged.get(key, 0) + value
+        elif key not in merged:
+            merged[key] = value
+    return merged
+
+
 def read_context_file(repo: Path, ref: str, max_chars: int) -> str:
     path = Path(ref) if os.path.isabs(ref) else repo / ref
     if not path.is_file():
@@ -430,7 +445,8 @@ def run(args) -> int:
         "effort": args.effort, "repo": str(repo),
         "plan": str(plan_used) if plan_used is not None else None, "plan_sha256": plan_sha,
         "base": before["base"] if before else None, "snapshot": before,
-        "api": {"base_url": args.base_url, "attempts": 0, "parse_retries": 0},
+        "api": {"base_url": args.base_url, "attempts": 0, "parse_retries": 0,
+                "usage_accumulated": True},
         "usage": None, "cost_usd": None, "review": None,
         "started_at": time.time(), "artifacts": str(run_dir),
     }
@@ -479,9 +495,12 @@ def run(args) -> int:
             response, attempts = call_api(api_key, args.base_url, payload, args.timeout,
                                           args.retries)
             record["api"]["attempts"] += attempts
-            (run_dir / "response.json").write_text(json.dumps(response, indent=2, ensure_ascii=False), encoding="utf-8")
+            (run_dir / f"response-{parse_attempt + 1:02d}.json").write_text(
+                json.dumps(response, indent=2, ensure_ascii=False), encoding="utf-8")
+            (run_dir / "response.json").write_text(
+                json.dumps(response, indent=2, ensure_ascii=False), encoding="utf-8")
             record["model_observed"] = response.get("model")
-            record["usage"] = response.get("usage")
+            record["usage"] = merge_usage(record["usage"], response.get("usage"))
             content, reasoning, finish = extract_message(response)
             if reasoning:
                 (run_dir / "reasoning.txt").write_text(reasoning, encoding="utf-8")

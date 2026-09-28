@@ -35,9 +35,12 @@ python3 benchmark.py score
 python3 benchmark.py report
 ```
 
-`prepare` refuses a non-empty work directory. Use a new `--work-dir` for a new
-run; this prevents accidental mixing or overwrite. `run` resumes by job ID and
-keeps failures stopped unless `--retry-failed` is explicitly supplied.
+The default work directory is outside the checkout under the user's cache
+directory. `prepare` refuses a non-empty work directory. Use a new `--work-dir`
+for a new run; this prevents accidental mixing or overwrite. `run` resumes by
+job ID and keeps failures stopped unless `--retry-failed` is explicitly
+supplied. `report` also writes into that work directory unless `--output` is
+given, so a rerun does not overwrite this published report.
 
 DeepSeek calls are disabled unless `--allow-paid-deepseek` is supplied. The
 runner uses `DEEPSEEK_API_KEY` if present; otherwise it reads the existing
@@ -60,14 +63,15 @@ one system when the other cannot run.
   tests each skill as shipped; it does not claim identical transport.
 - Ground truth remains outside generated fixture repositories, so reviewers do
   not receive answer keys.
-- A finding is relevant when it matches any seeded contract defect; splitting
-  one root cause into several findings does not make the duplicates false.
-  Unmatched findings still need manual review before public claims.
+- The scorer assigns each finding to at most one seeded contract defect using
+  deterministic keyword rules. This prevents one broad finding from earning
+  credit for several defects. These automated matches are not manual
+  adjudication; inspect `RESULTS.jsonl` before making broader claims.
 - Primary quality and completion use each job's first attempt. Later retries
   remain in the ledger for diagnostics and cost, but cannot repair the score.
-- Quote results only with `SUITE.json`, `SCORES.json`, and `RUN-CONFIG.json`.
-  The config records runner hashes, source heads, observed models, caps, and
-  retry state. Results are suite- and configuration-specific.
+- Quote results only with `RESULTS.jsonl`, `SUITE.json`, `SCORES.json`, and
+  `RUN-CONFIG.json`. The config records runner hashes, source heads, observed
+  models, caps, and retry state. Results are suite- and configuration-specific.
 
 ## Cases
 
@@ -92,6 +96,8 @@ review verdict.
 ## Published evidence
 
 - `REPORT.md`: readable comparison and per-run table.
+- `RESULTS.jsonl`: sanitized structured findings for all 48 jobs. Prompts,
+  hidden reasoning, local paths, and secrets are excluded.
 - `SCORES.json`: scored rows plus aggregates.
 - `SUITE.json`: sanitized randomized job manifest and environment fingerprint.
 - `RUN-CONFIG.json`: exact initial and retry settings.

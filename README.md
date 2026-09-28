@@ -14,7 +14,7 @@
 
 Codex plans, builds and coordinates in your own session. **DeepSeek-V4.1-Flash** (open weights, MIT, ~221 tokens/second, $0.15 / $0.60 per million tokens off-peak) adversarially reviews the plan before code exists, then independently inspects the final diff. The model that built it never grades it — and the grading seat costs about **1/40th to 1/70th of a frontier reviewer** ([benchmarks and cost math](BENCHMARKS.md)).
 
-In a direct 48-job synthetic comparison against YMI's Claudex adaptation, both loops found all 39 seeded defects and tied on preregistered quality. DeepSeek returned the expected verdict on every run and was 36% faster at the median. [Read the full comparison and its limits.](BENCHMARKS.md#direct-loop-reviewer-benchmark)
+In a direct 48-job synthetic comparison against YMI's Claudex adaptation, automated one-to-one scoring credited both loops with all 39 seeded defects, and the quality result was a tie under the preregistered threshold. DeepSeek returned the expected verdict on every run and was 36% faster at the median. [Read the evidence and limits.](BENCHMARKS.md#direct-loop-reviewer-benchmark)
 
 > Sibling repository: **[claude-deepseek-loop](https://github.com/YoungMoneyInvestments/claude-deepseek-loop)** — the same loop for hosts that run in Claude Code.
 

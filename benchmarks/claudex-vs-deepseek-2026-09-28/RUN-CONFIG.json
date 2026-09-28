@@ -1,5 +1,8 @@
 {
   "benchmark_source_commit_for_live_runs": "a66c15d46160f916d14039e63008be0a251f2332",
+  "benchmark_runner_sha256_for_live_runs": "a32b817748f50413332c80e4710c999837f0d395edaf8da8feb598a6d7500870",
+  "published_scorer_sha256": "617205d08e5f57dc87840be12a90e7c37bceb0cd9470af1511ecbe8d46f3609f",
+  "scoring_revision": "Post-run independent audit added one-to-one finding-to-defect matching; no model jobs were rerun.",
   "initial": {
     "jobs": 48,
     "claudex_jobs": 24,
@@ -12,6 +15,9 @@
     "deepseek_effort": "high",
     "deepseek_max_tokens": 8192,
     "deepseek_http_retries": 0,
+    "deepseek_json_parse_retries_observed": 1,
+    "deepseek_retry_usage_complete": false,
+    "builder_model": "gpt-5",
     "timeout_seconds": 600
   },
   "retry": null,
