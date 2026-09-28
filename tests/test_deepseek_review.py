@@ -208,13 +208,24 @@ class ReviewModeTests(unittest.TestCase):
         self.assertEqual(len(api.requests), 2)
 
     def test_parse_retry_on_empty_then_success(self):
-        with FakeAPI([(200, api_body(content="")), (200, api_body())]) as api:
+        first_usage = {"prompt_tokens": 10, "completion_tokens": 2,
+                       "prompt_cache_hit_tokens": 0, "prompt_cache_miss_tokens": 10}
+        second_usage = {"prompt_tokens": 20, "completion_tokens": 3,
+                        "prompt_cache_hit_tokens": 5, "prompt_cache_miss_tokens": 15}
+        with FakeAPI([(200, api_body(content="", usage=first_usage)),
+                      (200, api_body(usage=second_usage))]) as api:
             code, _ = run_cli(["review", "--host", "claude", "--repo", str(self.repo),
                                "--base-url", api.base_url, "--artifacts", str(self.artifacts)])
         self.assertEqual(code, 0)
         record = self.latest_result()
         self.assertEqual(record["api"]["parse_retries"], 1)
         self.assertEqual(len(api.requests), 2)
+        self.assertEqual(record["usage"]["prompt_tokens"], 30)
+        self.assertEqual(record["usage"]["completion_tokens"], 5)
+        self.assertEqual(record["usage"]["prompt_cache_hit_tokens"], 5)
+        self.assertEqual(record["usage"]["prompt_cache_miss_tokens"], 25)
+        self.assertTrue((self.latest_dir() / "response-01.json").is_file())
+        self.assertTrue((self.latest_dir() / "response-02.json").is_file())
 
     def test_fails_closed_on_bad_schema(self):
         bad = json.dumps({"verdict": "APPROVED", "summary": "x"})

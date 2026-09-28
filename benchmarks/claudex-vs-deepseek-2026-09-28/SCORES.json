@@ -1,0 +1,2494 @@
+{
+  "schema_version": 1,
+  "quality_formula": "50% weighted recall + 25% seeded precision + 15% verdict accuracy + 10% severity accuracy",
+  "expected_jobs": {
+    "claudex": 24,
+    "deepseek": 24
+  },
+  "summary": {
+    "claudex": {
+      "jobs": 24,
+      "completed": 24,
+      "tp": 39,
+      "fp": 38,
+      "fn": 0,
+      "precision": 0.5064935064935064,
+      "recall": 1.0,
+      "weighted_recall": 1.0,
+      "f1": 0.6724137931034482,
+      "severity_accuracy": 0.8974358974358975,
+      "verdict_accuracy": 0.9166666666666666,
+      "completion_rate": 1.0,
+      "clean_control_accuracy": 1.0,
+      "quality_score": 85.38669663669664,
+      "attempts": 24,
+      "failed_attempts": 0,
+      "parse_retries": 0,
+      "cost_complete": true,
+      "median_latency_seconds": 16.75,
+      "tokens": {
+        "input_tokens": 407433,
+        "output_tokens": 36465
+      },
+      "reported_cost_usd": {
+        "kind": "cli_notional",
+        "total": 0.9779866
+      }
+    },
+    "deepseek": {
+      "jobs": 24,
+      "completed": 24,
+      "tp": 39,
+      "fp": 66,
+      "fn": 0,
+      "precision": 0.37142857142857144,
+      "recall": 1.0,
+      "weighted_recall": 1.0,
+      "f1": 0.5416666666666666,
+      "severity_accuracy": 0.8974358974358975,
+      "verdict_accuracy": 1.0,
+      "completion_rate": 1.0,
+      "clean_control_accuracy": 1.0,
+      "quality_score": 83.26007326007327,
+      "attempts": 24,
+      "failed_attempts": 0,
+      "parse_retries": 1,
+      "cost_complete": false,
+      "median_latency_seconds": 10.7,
+      "tokens": {
+        "input_tokens": 21576,
+        "output_tokens": 64262
+      },
+      "reported_cost_usd": {
+        "kind": "runner_estimate_lower_bound",
+        "off_peak": 0.039912,
+        "peak": 0.079823
+      }
+    }
+  },
+  "rows": [
+    {
+      "job_id": "plan-ledger-transfer-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F6",
+        "F7"
+      ],
+      "elapsed_seconds": 15.01,
+      "usage": {
+        "prompt_tokens": 730,
+        "completion_tokens": 2988,
+        "total_tokens": 3718,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1240
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 602
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 602,
+        "completion_tokens": 2988,
+        "usd_off_peak": 0.001883,
+        "usd_peak": 0.003767
+      }
+    },
+    {
+      "job_id": "inspect-ledger-write-r2-claudex",
+      "system": "claudex",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 1,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3"
+      ],
+      "elapsed_seconds": 15.29,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2319,
+        "cache_read_input_tokens": 10114,
+        "output_tokens": 1225,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2319,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1056,
+            "cache_read_input_tokens": 5823,
+            "cache_creation_input_tokens": 787,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 787
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0450908
+    },
+    {
+      "job_id": "inspect-tenant-cache-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 9.85,
+      "usage": {
+        "prompt_tokens": 1045,
+        "completion_tokens": 1988,
+        "total_tokens": 3033,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 808
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 917
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 917,
+        "completion_tokens": 1988,
+        "usd_off_peak": 0.001331,
+        "usd_peak": 0.002661
+      }
+    },
+    {
+      "job_id": "plan-market-validation-r1-claudex",
+      "system": "claudex",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 16.53,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2100,
+        "cache_read_input_tokens": 20007,
+        "output_tokens": 1074,
+        "output_tokens_details": {
+          "thinking_tokens": 27
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2100,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 702,
+            "cache_read_input_tokens": 7556,
+            "cache_creation_input_tokens": 211,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 211
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.034724099999999994
+    },
+    {
+      "job_id": "inspect-clean-retry-r2-claudex",
+      "system": "claudex",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 11.63,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2102,
+        "cache_read_input_tokens": 10135,
+        "output_tokens": 1005,
+        "output_tokens_details": {
+          "thinking_tokens": 88
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2102,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 719,
+            "cache_read_input_tokens": 5844,
+            "cache_creation_input_tokens": 549,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 549
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.038958999999999994
+    },
+    {
+      "job_id": "inspect-clean-retry-r1-claudex",
+      "system": "claudex",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 10.9,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 12237,
+        "output_tokens": 977,
+        "output_tokens_details": {
+          "thinking_tokens": 68
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 691,
+            "cache_read_input_tokens": 6393,
+            "cache_creation_input_tokens": 0,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0220034
+    },
+    {
+      "job_id": "inspect-tenant-cache-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 9.88,
+      "usage": {
+        "prompt_tokens": 1045,
+        "completion_tokens": 2040,
+        "total_tokens": 3085,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 687
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 149
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 149,
+        "completion_tokens": 2040,
+        "usd_off_peak": 0.001249,
+        "usd_peak": 0.002498
+      }
+    },
+    {
+      "job_id": "plan-ledger-transfer-r3-claudex",
+      "system": "claudex",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-3",
+        "F-5"
+      ],
+      "elapsed_seconds": 42.53,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2173,
+        "cache_read_input_tokens": 20107,
+        "output_tokens": 2615,
+        "output_tokens_details": {
+          "thinking_tokens": 1134
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2173,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 2236,
+            "cache_read_input_tokens": 7624,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.05830710000000001
+    },
+    {
+      "job_id": "inspect-tenant-cache-r3-claudex",
+      "system": "claudex",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "TC-2",
+        "TC-3"
+      ],
+      "elapsed_seconds": 16.15,
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 2750,
+        "cache_read_input_tokens": 16715,
+        "output_tokens": 1333,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2750,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1064,
+            "cache_read_input_tokens": 6494,
+            "cache_creation_input_tokens": 547,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 547
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.052027000000000004
+    },
+    {
+      "job_id": "inspect-ledger-write-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 8.92,
+      "usage": {
+        "prompt_tokens": 981,
+        "completion_tokens": 1625,
+        "total_tokens": 2606,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 421
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 725
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 725,
+        "completion_tokens": 1625,
+        "usd_off_peak": 0.001085,
+        "usd_peak": 0.002169
+      }
+    },
+    {
+      "job_id": "inspect-zip-slip-r2-claudex",
+      "system": "claudex",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "ZS-2",
+        "ZS-3",
+        "ZS-4"
+      ],
+      "elapsed_seconds": 23.56,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2315,
+        "cache_read_input_tokens": 10115,
+        "output_tokens": 2039,
+        "output_tokens_details": {
+          "thinking_tokens": 331
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2315,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1871,
+            "cache_read_input_tokens": 5824,
+            "cache_creation_input_tokens": 782,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 782
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.061339000000000005
+    },
+    {
+      "job_id": "inspect-ledger-write-r3-claudex",
+      "system": "claudex",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 1,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3"
+      ],
+      "elapsed_seconds": 14.75,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 800,
+        "cache_read_input_tokens": 11646,
+        "output_tokens": 1207,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 800,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1025,
+            "cache_read_input_tokens": 5823,
+            "cache_creation_input_tokens": 800,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 800
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0328852
+    },
+    {
+      "job_id": "inspect-clean-retry-r3-claudex",
+      "system": "claudex",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 12.75,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 563,
+        "cache_read_input_tokens": 11688,
+        "output_tokens": 1062,
+        "output_tokens_details": {
+          "thinking_tokens": 92
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 563,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 762,
+            "cache_read_input_tokens": 5844,
+            "cache_creation_input_tokens": 563,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 563
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0280976
+    },
+    {
+      "job_id": "inspect-ledger-write-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 10.07,
+      "usage": {
+        "prompt_tokens": 981,
+        "completion_tokens": 1917,
+        "total_tokens": 2898,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 455
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 213
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 213,
+        "completion_tokens": 1917,
+        "usd_off_peak": 0.001184,
+        "usd_peak": 0.002369
+      }
+    },
+    {
+      "job_id": "inspect-zip-slip-r3-claudex",
+      "system": "claudex",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "ZS-2",
+        "ZS-3",
+        "ZS-4",
+        "ZS-5"
+      ],
+      "elapsed_seconds": 25.68,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 804,
+        "cache_read_input_tokens": 11648,
+        "output_tokens": 2366,
+        "output_tokens_details": {
+          "thinking_tokens": 447
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 804,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 2176,
+            "cache_read_input_tokens": 5824,
+            "cache_creation_input_tokens": 804,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 804
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.056097600000000004
+    },
+    {
+      "job_id": "plan-market-validation-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 14.93,
+      "usage": {
+        "prompt_tokens": 696,
+        "completion_tokens": 2665,
+        "total_tokens": 3361,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1210
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 568
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 568,
+        "completion_tokens": 2665,
+        "usd_off_peak": 0.001685,
+        "usd_peak": 0.003369
+      }
+    },
+    {
+      "job_id": "inspect-ledger-write-r1-claudex",
+      "system": "claudex",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "LEDGER-3",
+        "LEDGER-4"
+      ],
+      "elapsed_seconds": 16.61,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 799,
+        "cache_read_input_tokens": 11646,
+        "output_tokens": 1307,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 799,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1126,
+            "cache_read_input_tokens": 5823,
+            "cache_creation_input_tokens": 799,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 799
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.034877200000000004
+    },
+    {
+      "job_id": "inspect-zip-slip-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 17.85,
+      "usage": {
+        "prompt_tokens": 987,
+        "completion_tokens": 3599,
+        "total_tokens": 4586,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1925
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 731
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 731,
+        "completion_tokens": 3599,
+        "usd_off_peak": 0.00227,
+        "usd_peak": 0.00454
+      }
+    },
+    {
+      "job_id": "inspect-clean-retry-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 5.12,
+      "usage": {
+        "prompt_tokens": 990,
+        "completion_tokens": 934,
+        "total_tokens": 1924,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 517
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 734
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 734,
+        "completion_tokens": 934,
+        "usd_off_peak": 0.000671,
+        "usd_peak": 0.001343
+      }
+    },
+    {
+      "job_id": "inspect-tenant-cache-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 9.93,
+      "usage": {
+        "prompt_tokens": 1045,
+        "completion_tokens": 1944,
+        "total_tokens": 2989,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 797
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 149
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 149,
+        "completion_tokens": 1944,
+        "usd_off_peak": 0.001191,
+        "usd_peak": 0.002383
+      }
+    },
+    {
+      "job_id": "plan-archive-safety-r1-claudex",
+      "system": "claudex",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-003"
+      ],
+      "elapsed_seconds": 28.47,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 2099,
+        "cache_read_input_tokens": 19995,
+        "output_tokens": 1624,
+        "output_tokens_details": {
+          "thinking_tokens": 331
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2099,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 1250,
+            "cache_read_input_tokens": 7550,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0429645
+    },
+    {
+      "job_id": "inspect-receipt-parser-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3"
+      ],
+      "elapsed_seconds": 16.04,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 3519,
+        "total_tokens": 4591,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2392
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 816
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 816,
+        "completion_tokens": 3519,
+        "usd_off_peak": 0.002235,
+        "usd_peak": 0.004469
+      }
+    },
+    {
+      "job_id": "inspect-zip-slip-r1-claudex",
+      "system": "claudex",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "ZIP-2",
+        "ZIP-3",
+        "ZIP-4",
+        "ZIP-5"
+      ],
+      "elapsed_seconds": 23.53,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 799,
+        "cache_read_input_tokens": 11648,
+        "output_tokens": 1890,
+        "output_tokens_details": {
+          "thinking_tokens": 16
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 799,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1705,
+            "cache_read_input_tokens": 5824,
+            "cache_creation_input_tokens": 799,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 799
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0465376
+    },
+    {
+      "job_id": "inspect-zip-slip-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 37.86,
+      "usage": {
+        "prompt_tokens": 987,
+        "completion_tokens": 7911,
+        "total_tokens": 8898,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6190
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 219
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 219,
+        "completion_tokens": 7911,
+        "usd_off_peak": 0.004782,
+        "usd_peak": 0.009564
+      }
+    },
+    {
+      "job_id": "plan-archive-safety-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ],
+      "elapsed_seconds": 13.01,
+      "usage": {
+        "prompt_tokens": 691,
+        "completion_tokens": 2331,
+        "total_tokens": 3022,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 435
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 563
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 563,
+        "completion_tokens": 2331,
+        "usd_off_peak": 0.001483,
+        "usd_peak": 0.002967
+      }
+    },
+    {
+      "job_id": "plan-ledger-transfer-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F5",
+        "F6",
+        "F7"
+      ],
+      "elapsed_seconds": 48.65,
+      "usage": {
+        "prompt_tokens": 730,
+        "completion_tokens": 4284,
+        "total_tokens": 5014,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2882
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 218
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 218,
+        "completion_tokens": 4284,
+        "usd_off_peak": 0.002605,
+        "usd_peak": 0.005209
+      }
+    },
+    {
+      "job_id": "plan-market-validation-r3-claudex",
+      "system": "claudex",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 20.45,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 986,
+        "cache_read_input_tokens": 21127,
+        "output_tokens": 1166,
+        "output_tokens_details": {
+          "thinking_tokens": 30
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 986,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 791,
+            "cache_read_input_tokens": 7559,
+            "cache_creation_input_tokens": 211,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 211
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0297561
+    },
+    {
+      "job_id": "inspect-clean-retry-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 6.42,
+      "usage": {
+        "prompt_tokens": 990,
+        "completion_tokens": 1176,
+        "total_tokens": 2166,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 673
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 222
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 222,
+        "completion_tokens": 1176,
+        "usd_off_peak": 0.000741,
+        "usd_peak": 0.001482
+      }
+    },
+    {
+      "job_id": "plan-market-validation-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 10.6,
+      "usage": {
+        "prompt_tokens": 696,
+        "completion_tokens": 1863,
+        "total_tokens": 2559,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 545
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 184
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 184,
+        "completion_tokens": 1863,
+        "usd_off_peak": 0.001147,
+        "usd_peak": 0.002294
+      }
+    },
+    {
+      "job_id": "plan-ledger-transfer-r2-claudex",
+      "system": "claudex",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-4"
+      ],
+      "elapsed_seconds": 44.38,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 1021,
+        "cache_read_input_tokens": 21253,
+        "output_tokens": 2211,
+        "output_tokens_details": {
+          "thinking_tokens": 805
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1021,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 1835,
+            "cache_read_input_tokens": 7621,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0456789
+    },
+    {
+      "job_id": "plan-market-validation-r2-claudex",
+      "system": "claudex",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": false,
+      "verdict": "BLOCKED",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 16.89,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 986,
+        "cache_read_input_tokens": 21127,
+        "output_tokens": 1017,
+        "output_tokens_details": {
+          "thinking_tokens": 30
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 986,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 642,
+            "cache_read_input_tokens": 7559,
+            "cache_creation_input_tokens": 211,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 211
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0275211
+    },
+    {
+      "job_id": "inspect-zip-slip-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-zip-slip",
+      "completed": true,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "zip-path-escape"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 20.63,
+      "usage": {
+        "prompt_tokens": 987,
+        "completion_tokens": 3935,
+        "total_tokens": 4922,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2094
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 219
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 219,
+        "completion_tokens": 3935,
+        "usd_off_peak": 0.002396,
+        "usd_peak": 0.004792
+      }
+    },
+    {
+      "job_id": "plan-archive-safety-r2-claudex",
+      "system": "claudex",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-03",
+        "F-04"
+      ],
+      "elapsed_seconds": 28.3,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 991,
+        "cache_read_input_tokens": 21109,
+        "output_tokens": 1640,
+        "output_tokens_details": {
+          "thinking_tokens": 217
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 991,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 1263,
+            "cache_read_input_tokens": 7553,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0368907
+    },
+    {
+      "job_id": "plan-archive-safety-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "elapsed_seconds": 10.8,
+      "usage": {
+        "prompt_tokens": 691,
+        "completion_tokens": 1987,
+        "total_tokens": 2678,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 386
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 179
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 179,
+        "completion_tokens": 1987,
+        "usd_off_peak": 0.001221,
+        "usd_peak": 0.002441
+      }
+    },
+    {
+      "job_id": "inspect-receipt-parser-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 20.41,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 4554,
+        "total_tokens": 5626,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3278
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 176
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 176,
+        "completion_tokens": 4554,
+        "usd_off_peak": 0.002761,
+        "usd_peak": 0.005523
+      }
+    },
+    {
+      "job_id": "inspect-clean-retry-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-clean-retry",
+      "completed": true,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "target_weight": 0,
+      "hit_weight": 0,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "APPROVED",
+      "matched": [],
+      "missed": [],
+      "unmatched_findings": [],
+      "elapsed_seconds": 6.37,
+      "usage": {
+        "prompt_tokens": 990,
+        "completion_tokens": 1186,
+        "total_tokens": 2176,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 691
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 222
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 222,
+        "completion_tokens": 1186,
+        "usd_off_peak": 0.000747,
+        "usd_peak": 0.001494
+      }
+    },
+    {
+      "job_id": "plan-archive-safety-r3-claudex",
+      "system": "claudex",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": false,
+      "verdict": "BLOCKED",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-03",
+        "F-04",
+        "F-05"
+      ],
+      "elapsed_seconds": 27.82,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 988,
+        "cache_read_input_tokens": 21106,
+        "output_tokens": 1644,
+        "output_tokens_details": {
+          "thinking_tokens": 158
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 988,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 1270,
+            "cache_read_input_tokens": 7550,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0369318
+    },
+    {
+      "job_id": "plan-market-validation-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-market-validation",
+      "completed": true,
+      "tp": 2,
+      "fp": 5,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "wrong-session-boundary",
+        "noncausal-validation"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ],
+      "elapsed_seconds": 12.38,
+      "usage": {
+        "prompt_tokens": 696,
+        "completion_tokens": 2238,
+        "total_tokens": 2934,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 633
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 184
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 184,
+        "completion_tokens": 2238,
+        "usd_off_peak": 0.001372,
+        "usd_peak": 0.002744
+      }
+    },
+    {
+      "job_id": "inspect-receipt-parser-r1-claudex",
+      "system": "claudex",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3"
+      ],
+      "elapsed_seconds": 15.12,
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 2588,
+        "cache_read_input_tokens": 16801,
+        "output_tokens": 1250,
+        "output_tokens_details": {
+          "thinking_tokens": 71
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2588,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1006,
+            "cache_read_input_tokens": 6568,
+            "cache_creation_input_tokens": 311,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 311
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0490882
+    },
+    {
+      "job_id": "inspect-tenant-cache-r2-claudex",
+      "system": "claudex",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2-falsy-product-not-cached-check",
+        "F3-unbounded-cache-growth",
+        "F4-wall-clock-ttl"
+      ],
+      "elapsed_seconds": 15.92,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 874,
+        "cache_read_input_tokens": 11860,
+        "output_tokens": 1471,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 874,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1287,
+            "cache_read_input_tokens": 5930,
+            "cache_creation_input_tokens": 874,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 874
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0388
+    },
+    {
+      "job_id": "inspect-receipt-parser-r2-claudex",
+      "system": "claudex",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3"
+      ],
+      "elapsed_seconds": 15.73,
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 933,
+        "cache_read_input_tokens": 18448,
+        "output_tokens": 1423,
+        "output_tokens_details": {
+          "thinking_tokens": 67
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 933,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1183,
+            "cache_read_input_tokens": 6564,
+            "cache_creation_input_tokens": 311,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 311
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0396376
+    },
+    {
+      "job_id": "inspect-tenant-cache-r1-claudex",
+      "system": "claudex",
+      "case_id": "inspect-tenant-cache",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 3,
+      "hit_weight": 3,
+      "severity_correct": 1,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "cross-tenant-cache-leak"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2-falsy-cache-miss",
+        "F3-unbounded-growth-and-clock"
+      ],
+      "elapsed_seconds": 14.08,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 860,
+        "cache_read_input_tokens": 11860,
+        "output_tokens": 1218,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 860,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1048,
+            "cache_read_input_tokens": 5930,
+            "cache_creation_input_tokens": 860,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 860
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.033628000000000005
+    },
+    {
+      "job_id": "inspect-receipt-parser-r1-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3"
+      ],
+      "elapsed_seconds": 18.0,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 3955,
+        "total_tokens": 5027,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3003
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 176
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 176,
+        "completion_tokens": 3955,
+        "usd_off_peak": 0.002402,
+        "usd_peak": 0.004804
+      }
+    },
+    {
+      "job_id": "plan-ledger-transfer-r1-claudex",
+      "system": "claudex",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F-04"
+      ],
+      "elapsed_seconds": 35.73,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 1019,
+        "cache_read_input_tokens": 21251,
+        "output_tokens": 2050,
+        "output_tokens_details": {
+          "thinking_tokens": 609
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1019,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 1,
+            "output_tokens": 1676,
+            "cache_read_input_tokens": 7619,
+            "cache_creation_input_tokens": 216,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 216
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0432513
+    },
+    {
+      "job_id": "inspect-receipt-parser-r3-claudex",
+      "system": "claudex",
+      "case_id": "inspect-receipt-parser",
+      "completed": true,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 2,
+      "hit_weight": 2,
+      "severity_correct": 0,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "blank-line-ends-id-filter"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F2",
+        "F3"
+      ],
+      "elapsed_seconds": 18.6,
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 935,
+        "cache_read_input_tokens": 11884,
+        "output_tokens": 1651,
+        "output_tokens_details": {
+          "thinking_tokens": 232
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 935,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1430,
+            "cache_read_input_tokens": 5942,
+            "cache_creation_input_tokens": 935,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 935
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost_usd": 0.0428928
+    },
+    {
+      "job_id": "plan-archive-safety-r2-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-archive-safety",
+      "completed": true,
+      "tp": 3,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 9,
+      "hit_weight": 9,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "archive-hash",
+        "archive-link-traversal",
+        "archive-no-rollback"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F4",
+        "F5"
+      ],
+      "elapsed_seconds": 10.41,
+      "usage": {
+        "prompt_tokens": 691,
+        "completion_tokens": 1906,
+        "total_tokens": 2597,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 433
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 179
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 179,
+        "completion_tokens": 1906,
+        "usd_off_peak": 0.001172,
+        "usd_peak": 0.002344
+      }
+    },
+    {
+      "job_id": "plan-ledger-transfer-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "plan-ledger-transfer",
+      "completed": true,
+      "tp": 3,
+      "fp": 3,
+      "fn": 0,
+      "target_weight": 8,
+      "hit_weight": 8,
+      "severity_correct": 3,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "transfer-not-atomic",
+        "idempotency-recorded-late",
+        "amount-not-validated"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4",
+        "F6"
+      ],
+      "elapsed_seconds": 9.63,
+      "usage": {
+        "prompt_tokens": 730,
+        "completion_tokens": 1919,
+        "total_tokens": 2649,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1003
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 218
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 218,
+        "completion_tokens": 1919,
+        "usd_off_peak": 0.001186,
+        "usd_peak": 0.002371
+      }
+    },
+    {
+      "job_id": "inspect-ledger-write-r3-deepseek",
+      "system": "deepseek",
+      "case_id": "inspect-ledger-write",
+      "completed": true,
+      "tp": 2,
+      "fp": 2,
+      "fn": 0,
+      "target_weight": 6,
+      "hit_weight": 6,
+      "severity_correct": 2,
+      "verdict_correct": true,
+      "verdict": "REVISE",
+      "matched": [
+        "binary-float-money",
+        "partial-ledger-write"
+      ],
+      "missed": [],
+      "unmatched_findings": [
+        "F3",
+        "F4"
+      ],
+      "elapsed_seconds": 9.4,
+      "usage": {
+        "prompt_tokens": 981,
+        "completion_tokens": 1798,
+        "total_tokens": 2779,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 339
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 213
+      },
+      "cost_usd": {
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 213,
+        "completion_tokens": 1798,
+        "usd_off_peak": 0.001113,
+        "usd_peak": 0.002226
+      }
+    }
+  ]
+}
