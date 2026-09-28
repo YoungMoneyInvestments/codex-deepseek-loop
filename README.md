@@ -2,7 +2,7 @@
 
 # Codex + DeepSeek Loop
 
-### Four-phase plan hardening for Codex, with DeepSeek-V4.1-Flash as the independent reviewer.
+### Four-phase plan hardening for Codex (the ChatGPT coding agent), with DeepSeek-V4.1-Flash as the independent reviewer.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Tests](https://github.com/YoungMoneyInvestments/codex-deepseek-loop/actions/workflows/tests.yml/badge.svg)](https://github.com/YoungMoneyInvestments/codex-deepseek-loop/actions/workflows/tests.yml)

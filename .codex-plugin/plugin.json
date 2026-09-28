@@ -12,7 +12,8 @@
     "deepseek",
     "cross-model",
     "adversarial-review",
-    "codex"
+    "codex",
+    "chatgpt"
   ],
   "version": "1.0.0",
   "skills": "./skills/",
