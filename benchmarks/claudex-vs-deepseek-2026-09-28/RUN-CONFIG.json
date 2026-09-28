@@ -1,0 +1,26 @@
+{
+  "benchmark_source_commit_for_live_runs": "a66c15d46160f916d14039e63008be0a251f2332",
+  "initial": {
+    "jobs": 48,
+    "claudex_jobs": 24,
+    "deepseek_jobs": 24,
+    "order_seed": 20260928,
+    "repetitions": 3,
+    "claudex_plan_model_observed": "claude-sonnet-4-6",
+    "claudex_inspection_model_observed": "claude-opus-5-5",
+    "deepseek_model_observed": "deepseek-flash",
+    "deepseek_effort": "high",
+    "deepseek_max_tokens": 8192,
+    "deepseek_http_retries": 0,
+    "timeout_seconds": 600
+  },
+  "retry": null,
+  "runner_sha256": {
+    "claudex": "d5ce62e7d417608e1c53bfbeb89f7c6535ecdc52cd67443541818857a6f658b9",
+    "deepseek": "89ba4460b6a38a1b75b11fa12a637563609d27fa26c363cfc753b9e4f52503d3"
+  },
+  "source_heads": {
+    "claudex": "2a82e6e7d9d0f320b5d9069acf50740926f1ef0c",
+    "deepseek": "853a1467a25a113d74ec4a5ba2ad08db6ae65f7d"
+  }
+}

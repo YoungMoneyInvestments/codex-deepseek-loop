@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "seed": 20260928,
+  "repetitions": 3,
+  "created_at": 1790617843.855525,
+  "fixture_catalog_sha256": "67f55f42f9ae00ebb57d6d4c502ff9c03cf59ab59455c4b4cc9a9564488c43d3",
+  "runtime": {
+    "python": "3.14.7",
+    "git": "git version 2.55.0",
+    "claude": "2.1.283 (Claude Code)",
+    "claude_logged_in": true,
+    "claude_subscription_type": "max",
+    "codex": "codex-cli 0.157.1",
+    "claudex_runner_exists": true,
+    "deepseek_runner_exists": true,
+    "claudex_runner_sha256": "d5ce62e7d417608e1c53bfbeb89f7c6535ecdc52cd67443541818857a6f658b9",
+    "claudex_source_head": "2a82e6e7d9d0f320b5d9069acf50740926f1ef0c",
+    "deepseek_runner_sha256": "89ba4460b6a38a1b75b11fa12a637563609d27fa26c363cfc753b9e4f52503d3",
+    "deepseek_source_head": "853a1467a25a113d74ec4a5ba2ad08db6ae65f7d"
+  },
+  "cases": [
+    {
+      "id": "plan-archive-safety",
+      "kind": "review",
+      "title": "Plugin archive verification plan",
+      "repo": "fixtures/plan-archive-safety",
+      "base": "b9d1d6dbee98b621f9f74d2ded673ce4e39a0b0d",
+      "context": [
+        "REQUIREMENTS.md"
+      ],
+      "expected_count": 3
+    },
+    {
+      "id": "plan-ledger-transfer",
+      "kind": "review",
+      "title": "Idempotent money transfer plan",
+      "repo": "fixtures/plan-ledger-transfer",
+      "base": "6249d98b3c90ecadde8b74b3ce876aec979b3e9a",
+      "context": [
+        "REQUIREMENTS.md"
+      ],
+      "expected_count": 3
+    },
+    {
+      "id": "plan-market-validation",
+      "kind": "review",
+      "title": "Market-day validation plan",
+      "repo": "fixtures/plan-market-validation",
+      "base": "74f9a8a22de41ab86b2fe40f9564fd13ca564694",
+      "context": [
+        "REQUIREMENTS.md"
+      ],
+      "expected_count": 2
+    },
+    {
+      "id": "inspect-tenant-cache",
+      "kind": "inspect",
+      "title": "Tenant-scoped cache regression",
+      "repo": "fixtures/inspect-tenant-cache",
+      "base": "b21f4f5786d34e9eeacb0ecfd414db107eb3e678",
+      "context": [],
+      "expected_count": 1
+    },
+    {
+      "id": "inspect-zip-slip",
+      "kind": "inspect",
+      "title": "Unsafe archive extraction",
+      "repo": "fixtures/inspect-zip-slip",
+      "base": "075fbb315d8f1092496b5a3556165c563042d40d",
+      "context": [],
+      "expected_count": 1
+    },
+    {
+      "id": "inspect-ledger-write",
+      "kind": "inspect",
+      "title": "Money precision and partial write",
+      "repo": "fixtures/inspect-ledger-write",
+      "base": "a904144250de22a14abda06da76f94337762cd3b",
+      "context": [],
+      "expected_count": 2
+    },
+    {
+      "id": "inspect-receipt-parser",
+      "kind": "inspect",
+      "title": "Blank-line parser state regression",
+      "repo": "fixtures/inspect-receipt-parser",
+      "base": "65c202812a4488dc508a83740f7e8b3ebfe47097",
+      "context": [],
+      "expected_count": 1
+    },
+    {
+      "id": "inspect-clean-retry",
+      "kind": "inspect",
+      "title": "Clean bounded retry",
+      "repo": "fixtures/inspect-clean-retry",
+      "base": "863bae5fcf21ab1e63bb5b9bbcf7295d600083bd",
+      "context": [],
+      "expected_count": 0
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "plan-ledger-transfer-r2-deepseek",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-ledger-write-r2-claudex",
+      "case_id": "inspect-ledger-write",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r2-deepseek",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-market-validation-r1-claudex",
+      "case_id": "plan-market-validation",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-clean-retry-r2-claudex",
+      "case_id": "inspect-clean-retry",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-clean-retry-r1-claudex",
+      "case_id": "inspect-clean-retry",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r3-deepseek",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-ledger-transfer-r3-claudex",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r3-claudex",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-ledger-write-r1-deepseek",
+      "case_id": "inspect-ledger-write",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-zip-slip-r2-claudex",
+      "case_id": "inspect-zip-slip",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-ledger-write-r3-claudex",
+      "case_id": "inspect-ledger-write",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-clean-retry-r3-claudex",
+      "case_id": "inspect-clean-retry",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-ledger-write-r2-deepseek",
+      "case_id": "inspect-ledger-write",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-zip-slip-r3-claudex",
+      "case_id": "inspect-zip-slip",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "plan-market-validation-r1-deepseek",
+      "case_id": "plan-market-validation",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-ledger-write-r1-claudex",
+      "case_id": "inspect-ledger-write",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-zip-slip-r1-deepseek",
+      "case_id": "inspect-zip-slip",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-clean-retry-r1-deepseek",
+      "case_id": "inspect-clean-retry",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r1-deepseek",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-archive-safety-r1-claudex",
+      "case_id": "plan-archive-safety",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r3-deepseek",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-zip-slip-r1-claudex",
+      "case_id": "inspect-zip-slip",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-zip-slip-r3-deepseek",
+      "case_id": "inspect-zip-slip",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-archive-safety-r3-deepseek",
+      "case_id": "plan-archive-safety",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-ledger-transfer-r1-deepseek",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-market-validation-r3-claudex",
+      "case_id": "plan-market-validation",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-clean-retry-r2-deepseek",
+      "case_id": "inspect-clean-retry",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-market-validation-r3-deepseek",
+      "case_id": "plan-market-validation",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-ledger-transfer-r2-claudex",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "plan-market-validation-r2-claudex",
+      "case_id": "plan-market-validation",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-zip-slip-r2-deepseek",
+      "case_id": "inspect-zip-slip",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-archive-safety-r2-claudex",
+      "case_id": "plan-archive-safety",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "plan-archive-safety-r1-deepseek",
+      "case_id": "plan-archive-safety",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r2-deepseek",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-clean-retry-r3-deepseek",
+      "case_id": "inspect-clean-retry",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-archive-safety-r3-claudex",
+      "case_id": "plan-archive-safety",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "plan-market-validation-r2-deepseek",
+      "case_id": "plan-market-validation",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r1-claudex",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r2-claudex",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r2-claudex",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 2,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-tenant-cache-r1-claudex",
+      "case_id": "inspect-tenant-cache",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r1-deepseek",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 1,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-ledger-transfer-r1-claudex",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 1,
+      "system": "claudex"
+    },
+    {
+      "job_id": "inspect-receipt-parser-r3-claudex",
+      "case_id": "inspect-receipt-parser",
+      "repetition": 3,
+      "system": "claudex"
+    },
+    {
+      "job_id": "plan-archive-safety-r2-deepseek",
+      "case_id": "plan-archive-safety",
+      "repetition": 2,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "plan-ledger-transfer-r3-deepseek",
+      "case_id": "plan-ledger-transfer",
+      "repetition": 3,
+      "system": "deepseek"
+    },
+    {
+      "job_id": "inspect-ledger-write-r3-deepseek",
+      "case_id": "inspect-ledger-write",
+      "repetition": 3,
+      "system": "deepseek"
+    }
+  ],
+  "published_sanitized": true
+}

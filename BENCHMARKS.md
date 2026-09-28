@@ -2,6 +2,30 @@
 
 This document explains the model choice behind the loop, from measured numbers — and states its limits. All figures were retrieved on **2026-09-28** from the sources linked at the bottom; vendor-reported scores are marked, and independent measurements are attributed.
 
+## Direct loop reviewer benchmark
+
+We also ran a controlled first-party comparison of this repository against Young Money Investments' policy-selected adaptation of [Chase AI's `claudex-loop`](https://github.com/chaseai-yt/claudex-loop) (MIT). The suite used eight synthetic, secret-free plan and code-review cases, three repetitions, and randomized interleaving: 24 jobs per loop, 48 total. Both systems received the same task, Git base, candidate diff, and answer key.
+
+| Metric | Claudex loop | Codex DeepSeek loop |
+|---|---:|---:|
+| Composite quality score | 88.7 | 88.4 |
+| Seeded defects found | 39/39 | 39/39 |
+| Clean-control accuracy | 100.0% | 100.0% |
+| Expected-verdict accuracy | 91.7% | 100.0% |
+| Severity accuracy | 89.7% | 92.3% |
+| Seeded-defect precision | 63.9% | 56.5% |
+| First-attempt completion | 24/24 | 24/24 |
+| Median latency | 16.8 seconds | 10.7 seconds |
+| Run cost | $0.9780 CLI notional | $0.0399 to $0.0798 estimate |
+
+The preregistered quality rule treated differences below two points as a tie. Both reviewers found every seeded defect and approved every clean control. DeepSeek was 36% faster at the median and returned the expected verdict on every run. Claudex produced fewer findings that could not be matched to the seeded answer key.
+
+These are not audited false-positive rates. An unmatched finding may be a valid extra defect, a duplicate, or noise. Claude's dollar figure is an API-equivalent CLI value from a Max subscription, not a billed invoice; DeepSeek's figure is a token-based runner estimate. The suite measures reviewer behavior, not builder quality or complete project delivery.
+
+The tested source heads were `2a82e6e7d9d0f320b5d9069acf50740926f1ef0c` for the YMI Claudex adaptation and `853a1467a25a113d74ec4a5ba2ad08db6ae65f7d` for this repository. The tested Claudex source lives in a private multi-skill repository, so its SHA identifies the snapshot but public readers cannot independently audit it. Claudex plan reviews used observed `claude-sonnet-4-6`; inspections used `claude-opus-5-5`. DeepSeek used observed `deepseek-flash` at high effort with an 8,192-token output cap and no HTTP retries.
+
+Full fixtures, scoring code, per-run scores, configuration, and report are in [`benchmarks/claudex-vs-deepseek-2026-09-28/`](benchmarks/claudex-vs-deepseek-2026-09-28/).
+
 ## TL;DR
 
 | | DeepSeek-V4.1-Flash | Claude Fable 5.1 | GPT-5.6 Sol | GPT-6 Astra |
@@ -95,7 +119,7 @@ No model is right because of its benchmark score. The loop is designed so the re
 - **Raw knowledge** (HLE without tools: 36.8 vs Opus-5.0's 56.3) is not V4.1-Flash's strength; reviews should lean on provided evidence, exactly as the runner's instructions do.
 - **JSON-mode quirk**: DeepSeek's JSON mode can occasionally return empty content; the runner retries once and then fails honestly rather than inventing a verdict.
 - **No repository access**: review quality is bounded by the context the host sends.
-- Scores in the head-to-head table are **vendor-reported** from DeepSeek's model card; the Artificial Analysis figures are independent. No public benchmark measures "defect recall as a reviewer" head-to-head — treat the agentic family as the best available proxy, and the loop's host-adjudication design as the safety net.
+- Scores in the model-card head-to-head table below are **vendor-reported** from DeepSeek's model card; the Artificial Analysis figures are independent. The direct synthetic comparison above is first-party evidence, not a third-party benchmark. Treat all three evidence classes separately.
 
 ## Sources
 
